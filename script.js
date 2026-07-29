@@ -1,29 +1,19 @@
-const enterButton = document.getElementById("enterButton");
+document.addEventListener("DOMContentLoaded", () => {
 
-enterButton.addEventListener("click", () => {
+    const button = document.getElementById("enterButton");
 
-    enterButton.innerHTML = "Loading...";
+    button.addEventListener("click", () => {
 
-    enterButton.disabled = true;
+        button.textContent = "WELCOME";
 
-    enterButton.style.opacity = "0.7";
+        button.style.transform = "scale(1.08)";
 
-    document.body.style.transition = "1s";
+        setTimeout(() => {
 
-    document.body.style.filter = "brightness(1.25)";
+            button.style.transform = "scale(1)";
 
-    setTimeout(() => {
+        },300);
 
-        alert("Welcome to HEVAL STAGE");
-
-        document.body.style.filter = "brightness(1)";
-
-        enterButton.innerHTML = "ENTER";
-
-        enterButton.disabled = false;
-
-        enterButton.style.opacity = "1";
-
-    },1200);
+    });
 
 });
