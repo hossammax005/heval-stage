@@ -1,194 +1,282 @@
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-html,
-body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    font-family:Arial,Helvetica,sans-serif;
-    background:#050816;
-    color:#fff;
+html,body{
+width:100%;
+height:100%;
+overflow:hidden;
+font-family:Arial,Helvetica,sans-serif;
+background:#050816;
+color:#fff;
 }
 
-/* الخلفية */
-
 body{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    position:relative;
-    background:
-    radial-gradient(circle at top,#152b6d 0%,#08122e 35%,#050816 70%,#02030a 100%);
+display:flex;
+justify-content:center;
+align-items:center;
+position:relative;
+background:
+radial-gradient(circle at center,
+#1b2d70 0%,
+#08112b 40%,
+#03040c 100%);
 }
 
 /* النجوم */
 
 #stars{
 
-    position:absolute;
-    inset:0;
+position:absolute;
+inset:0;
 
-    background-image:
-    radial-gradient(white 1px,transparent 1px),
-    radial-gradient(#72dfff 1px,transparent 1px);
+background-image:
+radial-gradient(white 1px,transparent 1px),
+radial-gradient(#55ddff 1px,transparent 1px);
 
-    background-size:
-    90px 90px,
-    150px 150px;
+background-size:
+90px 90px,
+170px 170px;
 
-    opacity:.35;
+opacity:.35;
 
-    animation:stars 30s linear infinite;
-
-}
-
-@keyframes stars{
-
-    from{
-        transform:translateY(0);
-    }
-
-    to{
-        transform:translateY(-180px);
-    }
+animation:starsMove 35s linear infinite;
 
 }
 
-/* المحتوى */
+@keyframes starsMove{
+
+from{
+transform:translateY(0);
+}
+
+to{
+transform:translateY(-200px);
+}
+
+}
+
+/* حلقات البوابة */
+
+.portal-ring{
+
+position:absolute;
+
+width:520px;
+height:520px;
+
+border-radius:50%;
+
+border:2px solid rgba(0,220,255,.25);
+
+box-shadow:
+0 0 25px #00cfff,
+0 0 70px rgba(0,150,255,.4);
+
+animation:spin 25s linear infinite;
+
+}
+
+.ring2{
+
+width:420px;
+height:420px;
+
+animation-direction:reverse;
+animation-duration:15s;
+
+opacity:.6;
+
+}
+
+@keyframes spin{
+
+from{
+
+transform:rotate(0deg);
+
+}
+
+to{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+/* الكارت */
 
 .container{
 
-    position:relative;
+position:relative;
 
-    z-index:2;
+z-index:10;
 
-    width:90%;
-    max-width:500px;
+width:92%;
+max-width:520px;
 
-    padding:40px 25px;
+padding:40px 25px;
 
-    text-align:center;
+border-radius:30px;
 
-    border-radius:24px;
+background:rgba(255,255,255,.05);
 
-    background:rgba(255,255,255,.05);
+backdrop-filter:blur(14px);
 
-    backdrop-filter:blur(12px);
+border:1px solid rgba(255,255,255,.15);
 
-    border:1px solid rgba(255,255,255,.15);
+box-shadow:
+0 0 40px rgba(0,180,255,.2);
 
-    box-shadow:
-    0 0 40px rgba(0,180,255,.18);
+text-align:center;
 
 }
 
-/* شعار HEVAL */
+/* الشعار */
 
 .logo{
 
-    font-size:54px;
+font-size:54px;
 
-    font-weight:bold;
+font-weight:bold;
 
-    letter-spacing:8px;
+letter-spacing:8px;
 
-    color:#ffffff;
+text-shadow:
+0 0 10px white,
+0 0 35px #00d7ff,
+0 0 80px #006dff;
 
-    text-shadow:
-    0 0 8px #ffffff,
-    0 0 25px #00d4ff,
-    0 0 60px #007dff;
-
-    animation:pulse 4s ease-in-out infinite;
+animation:pulse 4s infinite;
 
 }
 
 @keyframes pulse{
 
-    0%,100%{
+0%,100%{
 
-        transform:scale(1);
-
-    }
-
-    50%{
-
-        transform:scale(1.05);
-
-    }
+transform:scale(1);
 
 }
 
-/* العنوان */
+50%{
+
+transform:scale(1.06);
+
+}
+
+}
 
 h1{
 
-    margin-top:30px;
+margin-top:25px;
 
-    font-size:30px;
-
-    line-height:1.4;
+font-size:30px;
 
 }
-
-/* الوصف */
 
 .subtitle{
 
-    margin-top:18px;
+margin-top:18px;
 
-    color:#9fdfff;
+margin-bottom:35px;
 
-    font-size:17px;
+font-size:16px;
 
-    line-height:1.8;
+color:#9fdfff;
 
-}
-
-/* الزر */
-
-#enterButton{
-
-    margin-top:40px;
-
-    padding:15px 42px;
-
-    border:none;
-
-    border-radius:50px;
-
-    background:
-    linear-gradient(90deg,#00bfff,#006dff);
-
-    color:white;
-
-    font-size:17px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    transition:.3s;
-
-    box-shadow:
-    0 0 20px rgba(0,180,255,.5);
+line-height:1.8;
 
 }
 
-#enterButton:hover{
+/* أزرار العالم */
 
-    transform:scale(1.06);
+.portal-buttons{
 
-    box-shadow:
-    0 0 35px rgba(0,220,255,.9);
+display:flex;
+
+flex-direction:column;
+
+gap:18px;
 
 }
 
-/* الهاتف */
+.portal-btn{
+
+padding:18px;
+
+border:none;
+
+border-radius:18px;
+
+font-size:19px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.35s;
+
+color:white;
+
+}
+
+.adam{
+
+background:
+linear-gradient(90deg,#00cfff,#006dff);
+
+box-shadow:
+0 0 25px rgba(0,180,255,.5);
+
+}
+
+.asr{
+
+background:
+linear-gradient(90deg,#8b5dff,#4f7dff);
+
+box-shadow:
+0 0 25px rgba(120,120,255,.45);
+
+}
+
+.portal-btn:hover{
+
+transform:scale(1.05);
+
+}
+
+/* رجوع */
+
+.back-btn{
+
+margin-top:30px;
+
+padding:12px 30px;
+
+border:none;
+
+border-radius:40px;
+
+background:#222f55;
+
+color:white;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.back-btn:hover{
+
+background:#3853a6;
+
+}
 
 @media(max-width:600px){
 
@@ -206,15 +294,17 @@ font-size:24px;
 
 }
 
-.subtitle{
+.portal-ring{
 
-font-size:15px;
+width:340px;
+height:340px;
 
 }
 
-#enterButton{
+.ring2{
 
-width:100%;
+width:270px;
+height:270px;
 
 }
 
