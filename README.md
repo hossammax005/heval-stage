@@ -1,2 +1,2 @@
 # heval-stage
-The World o.f Adam &amp; Asr
+The World of Adam &amp; Asr
