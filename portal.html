@@ -1,4 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HEVAL PORTAL</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
 <div id="stars"></div>
+
+<div class="portal-ring"></div>
+<div class="portal-ring ring2"></div>
 
 <div class="container">
 
@@ -6,26 +23,38 @@
 HEVAL
 </div>
 
-<h1>Digital Universe</h1>
+<h1>Choose Your World</h1>
 
 <p class="subtitle">
-Choose your destination
+Every journey begins with a single choice.
 </p>
 
-<button onclick="location.href='pages/adam.html'">
-ADAM
+<div class="portal-buttons">
+
+<button class="portal-btn adam"
+onclick="location.href='pages/adam.html'">
+
+✨ ADAM
+
 </button>
 
-<br><br>
+<button class="portal-btn asr"
+onclick="location.href='pages/asr.html'">
 
-<button onclick="location.href='pages/asr.html'">
-ASR
-</button>
+🌌 ASR
 
-<br><br>
-
-<button onclick="location.href='history.back()'">
-BACK
 </button>
 
 </div>
+
+<button class="back-btn"
+onclick="history.back()">
+
+← BACK
+
+</button>
+
+</div>
+
+</body>
+</html>
