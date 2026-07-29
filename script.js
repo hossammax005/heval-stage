@@ -1,79 +1,33 @@
-documendocument.addEventListener("DOMContentLoaded", () => {
+const enterButton = document.getElementById("enterButton");
 
-    // زر الدخول
-    const enterButton = document.getElementById("enterButton");
+enterButton.addEventListener("click", () => {
 
-    if (enterButton) {
+    enterButton.innerHTML = "ENTERING...";
 
-        enterButton.addEventListener("click", () => {
+    enterButton.disabled = true;
 
-            document.body.classList.add("entering");
+    document.body.style.transition = "1s";
 
-            enterButton.disabled = true;
-            enterButton.textContent = "ENTERING...";
+    document.body.style.transform = "scale(1.05)";
 
-            setTimeout(() => {
+    document.body.style.filter = "brightness(1.3)";
 
-                window.location.href = "pages/home.html";
+    setTimeout(() => {
 
-            }, 1200);
+        document.body.style.opacity = "0";
 
-        });
+    },800);
 
-    }
+    setTimeout(() => {
 
-    // أزرار الصفحة الرئيسية
-    const adamButton = document.getElementById("adamButton");
-    const asrButton = document.getElementById("asrButton");
-    const systemButton = document.getElementById("systemButton");
+        alert("Welcome to HEVAL");
 
-    if (adamButton) {
+        document.body.style.opacity = "1";
+        document.body.style.transform = "scale(1)";
+        document.body.style.filter = "brightness(1)";
+        enterButton.innerHTML = "ENTER";
+        enterButton.disabled = false;
 
-        adamButton.addEventListener("click", () => {
-
-            alert("Adam's World - Coming Soon");
-
-        });
-
-    }
-
-    if (asrButton) {
-
-        asrButton.addEventListener("click", () => {
-
-            alert("Asr's World - Coming Soon");
-
-        });
-
-    }
-
-    if (systemButton) {
-
-        systemButton.addEventListener("click", () => {
-
-            alert("HEVAL Core - Under Construction");
-
-        });
-
-    }
-
-});.addEventListener("DOMContentLoaded", () => {
-
-    const button = document.getElementById("enterButton");
-
-    button.addEventListener("click", () => {
-
-        document.body.classList.add("entering");
-
-        button.disabled = true;
-        button.textContent = "ENTERING...";
-
-        setTimeout(() => {
-
-            window.location.href = "pages/home.html";
-
-        },1200);
-
-    });
+    },1800);
 
 });
