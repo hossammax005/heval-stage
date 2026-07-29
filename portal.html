@@ -1,60 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>HEVAL PORTAL</title>
-
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEVAL STAGE - Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="stars.css">
 </head>
-
 <body>
-
-<div id="stars"></div>
-
-<div class="portal-ring"></div>
-<div class="portal-ring ring2"></div>
-
-<div class="container">
-
-<div class="logo">
-HEVAL
-</div>
-
-<h1>Choose Your World</h1>
-
-<p class="subtitle">
-Every journey begins with a single choice.
-</p>
-
-<div class="portal-buttons">
-
-<button class="portal-btn adam"
-onclick="location.href='pages/adam.html'">
-
-✨ ADAM
-
-</button>
-
-<button class="portal-btn asr"
-onclick="location.href='pages/asr.html'">
-
-🌌 ASR
-
-</button>
-
-</div>
-
-<button class="back-btn"
-onclick="history.back()">
-
-← BACK
-
-</button>
-
-</div>
-
+    <div class="stars-container"></div>
+    <div class="portal-wrapper" style="position: relative; z-index: 10; text-align: center; padding: 50px 20px;">
+        <h1>منصة HEVAL STAGE</h1>
+        <p>التحكم المركزي والأدوات الأساسية</p>
+        <div class="nav-links" style="margin-top: 30px;">
+            <a href="adam.html" style="display: inline-block; margin: 10px; padding: 12px 25px; background: #222; color: #fff; text-decoration: none; border-radius: 8px;">إدارة آدم</a>
+            <a href="asr.html" style="display: inline-block; margin: 10px; padding: 12px 25px; background: #222; color: #fff; text-decoration: none; border-radius: 8px;">قسم أسر</a>
+        </div>
+    </div>
+    <script src="stars.js"></script>
 </body>
 </html>
