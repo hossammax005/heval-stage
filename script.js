@@ -4,15 +4,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     button.addEventListener("click", () => {
 
-        button.textContent = "WELCOME";
+        document.body.classList.add("entering");
 
-        button.style.transform = "scale(1.08)";
+        button.disabled = true;
+        button.textContent = "ENTERING...";
 
         setTimeout(() => {
 
-            button.style.transform = "scale(1)";
+            window.location.href = "pages/home.html";
 
-        },300);
+        },1200);
 
     });
 
