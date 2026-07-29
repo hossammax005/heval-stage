@@ -124,4 +124,12 @@ button:hover{
 
     }
 
+}button{
+
+    display:block;
+
+    width:260px;
+
+    margin:20px auto;
+
 }
