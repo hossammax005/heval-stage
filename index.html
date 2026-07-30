@@ -1,42 +1,100 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>HEVAL STAGE</title>
-
-  <meta name="theme-color" content="#050816">
-
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HEVAL -X- | ADAM & ASER WORLD</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div id="stars"></div>
+    <!-- خلفية الفضاء -->
+    <canvas id="space"></canvas>
 
-<div class="container">
+    <!-- حلقات البوابة السيبرانية -->
+    <div class="portal-ring"></div>
+    <div class="portal-ring ring2"></div>
 
-    <div class="logo">
-        HEVAL
+    <!-- كواكب تفاعلية -->
+    <div class="orbiting-planet p1" data-freq="523.25"></div>
+    <div class="orbiting-planet p2" data-freq="659.25"></div>
+    <div class="orbiting-planet p3" data-freq="783.99"></div>
+    <div class="orbiting-planet p4" data-freq="987.77"></div>
+
+    <!-- الشاشة الرئيسية -->
+    <div id="intro" class="container active">
+        <div class="logo">HEVAL <span class="x-tag">-X-</span></div>
+        
+        <div class="heart-container" id="pulsingHeart">
+            <span class="sub-names">ãdam</span>
+            <div class="heart-symbol">♡</div>
+            <span class="sub-names">ãser</span>
+        </div>
+
+        <p class="subtitle">Everything was made just for your smile</p>
+        
+        <button id="enterButton" class="main-start-btn">START PROTOCOL</button>
     </div>
 
-    <h1>
-        The World of Adam & Asr
-    </h1>
+    <!-- الصفحة الثانية: صفحة الموديولات (تم تعتيم الخلفية وتعطيل اللمس الخارجي) -->
+    <div id="worlds" class="container">
+        <div class="stage-title">Moudels</div>
+        <p class="subtitle">Select action module:</p>
 
-    <p class="subtitle">
-        A Digital Universe Built With Love
-    </p>
+        <div class="portal-buttons">
+            <!-- الزر الأول: عالم آدم وآسر -->
+            <button class="portal-btn adam" id="adamWorldBtn">
+                👦 Adam & Aser 👶 World
+            </button>
 
-    <button id="enterButton">
-        ENTER
-    </button>
+            <!-- الزر الثاني المخصص -->
+            <button class="portal-btn custom-abo" id="aboBtn" onclick="triggerAboAlarm()">
+                -Âbø♛Ãdam-X-
+            </button>
+        </div>
 
-</div>
+        <button id="backButton" class="back-btn">DISCONNECT / BACK</button>
+    </div>
 
-<script src="script.js"></script>
+    <!-- الصفحة الثالثة: عالم آدم وآسر الفضائي المتطور والتفاعلي -->
+    <div id="adamWorldPage" class="container space-world-page">
+        <div class="stage-title glow-title">🌌 ADAM & ASER WORLD 🌌</div>
+        <p class="subtitle bright-sub">اختر القطاع التفاعلي للاستكشاف:</p>
 
+        <!-- الكواكب المستديرة الخمسة للخدمات والتطبيقات -->
+        <div class="planet-modules-container">
+            <div class="planet-module pm-stories" onclick="openModuleSection('قصص الأنبياء التفاعلية')">
+                <div class="planet-sphere">📖</div>
+                <span class="planet-label">القصص</span>
+            </div>
+
+            <div class="planet-module pm-games" onclick="openModuleSection('الألعاب والتحديات')">
+                <div class="planet-sphere">🎮</div>
+                <span class="planet-label">الألعاب</span>
+            </div>
+
+            <div class="planet-module pm-messages" onclick="openModuleSection('صندوق الرسائل')">
+                <div class="planet-sphere">✉️</div>
+                <span class="planet-label">الرسائل</span>
+            </div>
+
+            <div class="planet-module pm-education" onclick="openModuleSection('المركز التعليمي')">
+                <div class="planet-sphere">🎓</div>
+                <span class="planet-label">التعليم</span>
+            </div>
+
+            <div class="planet-module pm-achieve" onclick="openModuleSection('لوحة الإنجازات')">
+                <div class="planet-sphere">🏆</div>
+                <span class="planet-label">الإنجازات</span>
+            </div>
+        </div>
+
+        <button id="exitAdamWorldBtn" class="back-btn">RETURN TO MODULES</button>
+    </div>
+
+    <!-- زر التحكم بالصوت -->
+    <button id="audioToggleBtn" class="audio-toggle-btn" onclick="toggleGlobalAudio()">🔊 SOUND: ON</button>
+
+    <script src="script.js"></script>
 </body>
 </html>
