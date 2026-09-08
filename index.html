@@ -3,43 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HEVAL STAGE</title>
+    <title>HEVAL STAGE - DIGITAL UNIVERSE</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <canvas id="space"></canvas>
 
-    <!-- الصفحة الرئيسية -->
-    <section id="intro" class="page active">
-        <div class="content-box">
-            <h1 class="gothic-title">𝖍ø§§ā𝖒</h1>
-            <p class="subtitle">HEVAL STAGE - DIGITAL UNIVERSE</p>
-            
-            <!-- جدار الرموز الخارجية المشفرة -->
-            <div class="symbols-bar">
-                <span class="symbol-tag">x̮̲̣̅̐</span>
-                <span class="symbol-tag">Â</span>
-                <span class="symbol-tag">∀</span>
-                <span class="symbol-tag">𝖍</span>
-            </div>
-
-            <div class="action-buttons">
-                <button id="enterButton" class="cyber-btn">دخول العالم 🌌</button>
-                <button id="giftGateBtn" class="gift-module-btn" onclick="openGiftModal()">🎁 GIFT GATE</button>
-            </div>
-            <button id="audioToggleBtn" onclick="toggleGlobalAudio()" class="audio-btn">🔊 SOUND: ON</button>
+    <!-- الصفحة الأولى - الشاشة الرئيسية -->
+    <div id="intro" class="page active">
+        <div class="main-header">
+            <h1 class="glow-title">HEVAL STAGE</h1>
+            <p class="sub-title">x̮̲̣̅̐ DIGITAL UNIVERSE</p>
         </div>
-    </section>
 
-    <!-- النافذة المنبثقة للهدايا -->
+        <div class="core-universe">
+            <div id="pulsingHeart" class="glowing-heart"></div>
+            <div class="orbiting-planet planet-1" data-freq="800"></div>
+            <div class="orbiting-planet planet-2" data-freq="1000"></div>
+            <div class="orbiting-planet planet-3" data-freq="1200"></div>
+        </div>
+
+        <div class="controls-bar">
+            <button id="audioToggleBtn" onclick="toggleGlobalAudio()">🔊 SOUND: ON</button>
+            <button id="enterButton" class="action-btn">استكشف القطاعات 🚀</button>
+        </div>
+    </div>
+
+    <!-- الصفحة الثانية - اختيار العوالم والقطاعات -->
+    <div id="worlds" class="page">
+        <h2 class="section-title">قطاعات HEVAL الرقمية</h2>
+        <div class="grid-container">
+            <button id="adamWorldBtn" class="sector-card">
+                <h3>🌌 قطاع Â & ∀</h3>
+                <p>الألعاب، القصص، والمغامرات التفاعلية</p>
+            </button>
+
+            <!-- زر الهدايا السري والفاخر -->
+            <button id="giftGateBtn" class="sector-card gift-card" onclick="openGiftModal()">
+                <h3>🎁 بوابة الهدايا Moudels</h3>
+                <p>اختر رمز المستلم وادخل كود السر</p>
+            </button>
+        </div>
+        <button id="backButton" class="back-btn">⬅ العودة للرئيسية</button>
+    </div>
+
+    <!-- النافذة المنبثقة للهدايا السرية وجدار الرموز -->
     <div id="giftModal" class="modal-overlay">
-        <div class="modal-card">
-            <button class="close-modal-btn" onclick="closeGiftModal()">✕</button>
-            <h3 class="gold-heading">◇ GATE OF SECRETS ◇</h3>
-            <p class="modal-desc">أدخل كود المفتاح الخاص للوصول إلى هدية قطاعك المشفّرة</p>
-            <input type="password" id="giftKeyInput" class="gold-input" placeholder="أدخل الكود السرّي..." />
-            <button onclick="submitGiftKey()" class="gold-submit-btn">فتح الصندوق 🔑</button>
-            <div id="giftResultBox" class="gift-result-box"></div>
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeGiftModal()">&times;</span>
+            <h2 class="gold-text">◇ GATE OF SECRETS ◇</h2>
+            <p>اختر الرمز الخاص بالمستلم:</p>
+
+            <!-- جدار الرموز المجهولة -->
+            <div class="symbol-wall">
+                <button class="symbol-btn" onclick="selectRecipient('Â', 'adam2026')">◇ Â</button>
+                <button class="symbol-btn" onclick="selectRecipient('∀', 'aser2026')">◇ ∀</button>
+                <button class="symbol-btn" onclick="selectRecipient('𝖍', 'heba2026')">◇ 𝖍</button>
+                <button class="symbol-btn" onclick="selectRecipient('x̮̲̣̅̐', 'hossam2026')">◇ x̮̲̣̅̐</button>
+            </div>
+
+            <div id="keyInputSection" class="key-input-section" style="display:none;">
+                <p id="selectedSymbolLabel" class="symbol-label"></p>
+                <input type="password" id="giftKeyInput" placeholder="أدخل المفتاح الخاص..." autocomplete="off">
+                <button class="gold-btn" onclick="submitGiftKey()">فتح الهدية 🗝️</button>
+            </div>
+
+            <div id="giftResult" class="gift-result-box"></div>
+
+            <!-- زر خروج واضحة ومباشرة من النافذة إلى الصفحة الرئيسية -->
+            <button class="back-btn modal-cancel-btn" onclick="closeGiftModal()" style="margin-top: 15px; width: 100%;">⬅ العودة للشاشة الرئيسية</button>
         </div>
     </div>
 
