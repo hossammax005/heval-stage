@@ -2,8 +2,8 @@
 // HEVAL STAGE - ADVANCED ENGINE v0.3.0
 // ==========================================
 
-// رابط الخادم الخفي على Cloudflare Workers
-const GIFT_API_URL = "https://fragrant-dream-c87d.adamhossam0005.workers.dev/api/gifts";
+// رابط الخادم الخفي المعتمد على Cloudflare Workers
+const GIFT_API_URL = "https://heval-gift-backend.adamhossam0005.workers.dev/auth";
 
 let audioCtx = null;
 let soundEnabled = true;
@@ -265,17 +265,17 @@ function openModuleSection(sectionTitle) {
 }
 
 // طلب الهدايا والرسائل عبر Cloudflare API
-async function fetchGiftData(accessKey) {
+async function fetchGiftData(key) {
     try {
         const response = await fetch(GIFT_API_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ accessKey })
+            body: JSON.stringify({ key })
         });
         const result = await response.json();
         return result;
     } catch (err) {
         console.error("GIFT API Error:", err);
-        return { error: "Network or Server Connection Error" };
+        return { success: false, message: "حدث خطأ أثناء الاتصال بالخادم السحابي" };
     }
 }
