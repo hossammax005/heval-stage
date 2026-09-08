@@ -3,119 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HEVAL -X- | ADAM & ASER WORLD</title>
+    <title>HEVAL STAGE</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <!-- خلفية الفضاء -->
     <canvas id="space"></canvas>
 
-    <!-- حلقات البوابة السيبرانية -->
-    <div class="portal-ring"></div>
-    <div class="portal-ring ring2"></div>
-
-    <!-- كواكب تفاعلية -->
-    <div class="orbiting-planet p1" data-freq="523.25"></div>
-    <div class="orbiting-planet p2" data-freq="659.25"></div>
-    <div class="orbiting-planet p3" data-freq="783.99"></div>
-    <div class="orbiting-planet p4" data-freq="987.77"></div>
-
     <!-- الشاشة الرئيسية -->
-    <div id="intro" class="container active">
-        <div class="logo">HEVAL <span class="x-tag">-X-</span></div>
-        
-        <div class="heart-container" id="pulsingHeart">
-            <span class="sub-names">ãdam</span>
-            <div class="heart-symbol">♡</div>
-            <span class="sub-names">ãser</span>
+    <section id="intro" class="page active">
+        <div class="content-box">
+            <h1 class="gothic-title">𝖍ø§§ā𝖒</h1>
+            <p class="subtitle">HEVAL STAGE - DIGITAL UNIVERSE</p>
+            <div class="action-buttons">
+                <button id="enterButton" class="cyber-btn">دخول العالم 🌌</button>
+                <button id="giftGateBtn" class="gift-module-btn" onclick="openGiftModal()">🎁 GIFT GATE</button>
+            </div>
+            <button id="audioToggleBtn" onclick="toggleGlobalAudio()" class="audio-btn">🔊 SOUND: ON</button>
         </div>
+    </section>
 
-        <p class="subtitle">Everything was made just for your smile</p>
-        
-        <button id="enterButton" class="main-start-btn">START PROTOCOL</button>
-    </div>
-
-    <!-- الصفحة الثانية: صفحة الموديولات -->
-    <div id="worlds" class="container">
-        <div class="stage-title">Modules</div>
-        <p class="subtitle">Select action module:</p>
-
-        <div class="portal-buttons">
-            <!-- الزر الأول: عالم آدم وآسر -->
-            <button class="portal-btn adam" id="adamWorldBtn">
-                👦 Adam & Aser 👶 World
-            </button>
-
-            <!-- الزر المخصص -->
-            <button class="portal-btn custom-abo" id="aboBtn" onclick="triggerAboAlarm()">
-                -Âbø♛Ãdam-X-
-            </button>
-        </div>
-
-        <button id="backButton" class="back-btn">DISCONNECT / BACK</button>
-    </div>
-
-    <!-- الصفحة الثالثة: عالم آدم وآسر الفضائي المتطور والتفاعلي -->
-    <div id="adamWorldPage" class="container space-world-page">
-        <div class="stage-title glow-title">🌌 ADAM & ASER WORLD 🌌</div>
-        <p class="subtitle bright-sub">اختر القطاع التفاعلي للاستكشاف:</p>
-
-        <!-- الكواكب المستديرة للخدمات والتطبيقات + كوكب الهدايا -->
-        <div class="planet-modules-container">
-            <div class="planet-module pm-stories" onclick="openModuleSection('قصص الأنبياء التفاعلية')">
-                <div class="planet-sphere">📖</div>
-                <span class="planet-label">القصص</span>
-            </div>
-
-            <div class="planet-module pm-games" onclick="openModuleSection('الألعاب والتحديات')">
-                <div class="planet-sphere">🎮</div>
-                <span class="planet-label">الألعاب</span>
-            </div>
-
-            <div class="planet-module pm-messages" onclick="openModuleSection('صندوق الرسائل')">
-                <div class="planet-sphere">✉️</div>
-                <span class="planet-label">الرسائل</span>
-            </div>
-
-            <!-- كوكب بوابة الهدايا المباشرة -->
-            <div class="planet-module pm-gifts" onclick="openGiftModal()">
-                <div class="planet-sphere">🎁</div>
-                <span class="planet-label">الهدايا</span>
-            </div>
-
-            <div class="planet-module pm-education" onclick="openModuleSection('المركز التعليمي')">
-                <div class="planet-sphere">🎓</div>
-                <span class="planet-label">التعليم</span>
-            </div>
-
-            <div class="planet-module pm-achieve" onclick="openModuleSection('لوحة الإنجازات')">
-                <div class="planet-sphere">🏆</div>
-                <span class="planet-label">الإنجازات</span>
-            </div>
-        </div>
-
-        <button id="exitAdamWorldBtn" class="back-btn">RETURN TO MODULES</button>
-    </div>
-
-    <!-- نافذة الهدايا والرسائل السرية (Gift Portal Overlay) -->
-    <div id="giftModal" class="gift-modal-overlay">
-        <div class="gift-modal-content">
+    <!-- النافذة المنبثقة للهدايا -->
+    <div id="giftModal" class="modal-overlay">
+        <div class="modal-card">
             <button class="close-modal-btn" onclick="closeGiftModal()">✕</button>
-            <div class="gift-modal-header">
-                <h3>SECRET GIFT GATEWAY 🎁</h3>
-                <p>أدخل كود الوصول لاستلام الهدية</p>
-            </div>
-            <div class="gift-input-group">
-                <input type="password" id="giftAccessKey" placeholder="أدخل المفتاح الخاص..." />
-                <button onclick="handleGiftSubmit()" id="giftSubmitBtn">فتح الهدية</button>
-            </div>
-            <div id="giftResultDisplay" class="gift-result-area"></div>
+            <h3 class="gold-heading">◇ GATE OF SECRETS ◇</h3>
+            <p class="modal-desc">أدخل كود المفتاح الخاص للوصول إلى هدية قطاعك</p>
+            <input type="password" id="giftKeyInput" class="gold-input" placeholder="أدخل الكود السرّي..." />
+            <button onclick="submitGiftKey()" class="gold-submit-btn">فتح الصندوق 🔑</button>
+            <div id="giftResultBox" class="gift-result-box"></div>
         </div>
     </div>
-
-    <!-- زر التحكم بالصوت -->
-    <button id="audioToggleBtn" class="audio-toggle-btn" onclick="toggleGlobalAudio()">🔊 SOUND: ON</button>
 
     <script src="script.js"></script>
 </body>
