@@ -2,6 +2,9 @@
 // HEVAL STAGE - ADVANCED ENGINE v0.3.0
 // ==========================================
 
+// رابط الخادم الخفي على Cloudflare Workers
+const GIFT_API_URL = "https://fragrant-dream-c87d.adamhossam0005.workers.dev/api/gifts";
+
 let audioCtx = null;
 let soundEnabled = true;
 
@@ -15,12 +18,16 @@ function toggleGlobalAudio() {
     soundEnabled = !soundEnabled;
     const btn = document.getElementById('audioToggleBtn');
     if (soundEnabled) {
-        btn.textContent = "🔊 SOUND: ON";
-        btn.style.borderColor = "rgba(0, 242, 254, 0.4)";
+        if (btn) {
+            btn.textContent = "🔊 SOUND: ON";
+            btn.style.borderColor = "rgba(0, 242, 254, 0.4)";
+        }
         playTone(880, 0.1);
     } else {
-        btn.textContent = "🔇 SOUND: OFF";
-        btn.style.borderColor = "rgba(255, 60, 60, 0.4)";
+        if (btn) {
+            btn.textContent = "🔇 SOUND: OFF";
+            btn.style.borderColor = "rgba(255, 60, 60, 0.4)";
+        }
     }
 }
 
@@ -51,31 +58,34 @@ function playTone(freq = 440, duration = 0.1, type = 'sine', ramp = true) {
 
 // محرك الفضاء والخلفية الحية
 const canvas = document.getElementById("space");
-const ctx = canvas.getContext("2d", { alpha: false });
+const ctx = canvas ? canvas.getContext("2d", { alpha: false }) : null;
 
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+if (canvas) {
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
 }
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
 
 const stars = [];
-for (let i = 0; i < 90; i++) {
-    stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 1.4 + 0.3,
-        speed: Math.random() * 0.4 + 0.1,
-        color: Math.random() > 0.5 ? "#00f2fe" : "#8b5dff"
-    });
+if (canvas) {
+    for (let i = 0; i < 90; i++) {
+        stars.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            radius: Math.random() * 1.4 + 0.3,
+            speed: Math.random() * 0.4 + 0.1,
+            color: Math.random() > 0.5 ? "#00f2fe" : "#8b5dff"
+        });
+    }
 }
 
 // نظام الدوائر السيبرانية الحية عند لمس الشاشة بالكامل في الصفحة الرئيسية
 let activeRings = [];
 
 window.addEventListener('pointerdown', (e) => {
-    // تفعيل التفاعل فقط إذا لم تكن الخلفية خافتة (الصفحة الثانية) ولم يتم الضغط على زر
     if (document.body.classList.contains('dimmed-bg')) return;
     if (e.target.closest('button') || e.target.closest('.planet-module')) return;
 
@@ -91,6 +101,7 @@ window.addEventListener('pointerdown', (e) => {
 });
 
 function drawScene() {
+    if (!ctx || !canvas) return;
     ctx.fillStyle = "#02040a";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -126,7 +137,7 @@ function animate() {
     drawScene();
     requestAnimationFrame(animate);
 }
-animate();
+if (canvas) animate();
 
 // تفاعل القلب والكواكب
 const planetElements = document.querySelectorAll('.orbiting-planet');
@@ -143,85 +154,101 @@ planetElements.forEach((el) => {
     });
 });
 
-pulsingHeart.addEventListener('click', () => {
-    if (isAttracting) return;
-    isAttracting = true;
-    playTone(300, 0.4, 'sawtooth');
+if (pulsingHeart) {
+    pulsingHeart.addEventListener('click', () => {
+        if (isAttracting) return;
+        isAttracting = true;
+        playTone(300, 0.4, 'sawtooth');
 
-    const heartRect = pulsingHeart.getBoundingClientRect();
-    const targetX = heartRect.left + heartRect.width / 2;
-    const targetY = heartRect.top + heartRect.height / 2;
+        const heartRect = pulsingHeart.getBoundingClientRect();
+        const targetX = heartRect.left + heartRect.width / 2;
+        const targetY = heartRect.top + heartRect.height / 2;
 
-    planetElements.forEach((el) => {
-        el.style.transition = "all 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045)";
-        el.style.left = `${targetX - 13}px`;
-        el.style.top = `${targetY - 13}px`;
-        el.style.transform = "scale(0.2)";
-    });
-
-    setTimeout(() => {
-        playTone(150, 0.3, 'square');
-        document.body.classList.add('pulse-active');
+        planetElements.forEach((el) => {
+            el.style.transition = "all 0.8s cubic-bezier(0.6, -0.28, 0.735, 0.045)";
+            el.style.left = `${targetX - 13}px`;
+            el.style.top = `${targetY - 13}px`;
+            el.style.transform = "scale(0.2)";
+        });
 
         setTimeout(() => {
-            planetElements.forEach((el) => {
-                el.style.transition = "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
-                el.style.top = "";
-                el.style.left = "";
-                el.style.transform = "scale(1)";
-            });
-            document.body.classList.remove('pulse-active');
-            isAttracting = false;
-        }, 300);
-    }, 800);
-});
+            playTone(150, 0.3, 'square');
+            document.body.classList.add('pulse-active');
+
+            setTimeout(() => {
+                planetElements.forEach((el) => {
+                    el.style.transition = "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+                    el.style.top = "";
+                    el.style.left = "";
+                    el.style.transform = "scale(1)";
+                });
+                document.body.classList.remove('pulse-active');
+                isAttracting = false;
+            }, 300);
+        }, 800);
+    });
+}
 
 // إدارة التنقل وحالات الإضاءة بين الصفحات
 const intro = document.getElementById("intro");
 const worlds = document.getElementById("worlds");
 const adamWorldPage = document.getElementById("adamWorldPage");
 
-// الانقال للصفحة الثانية (تخفيف الخلفية وتعطيل اللمس الخارجي)
-document.getElementById("enterButton").addEventListener("click", () => {
-    playTone(880, 0.12);
-    intro.classList.remove("active");
-    setTimeout(() => {
-        worlds.classList.add("active");
-        document.body.classList.add("dimmed-bg");
-    }, 200);
-});
+// الانتقال للصفحة الثانية
+const enterBtn = document.getElementById("enterButton");
+if (enterBtn) {
+    enterBtn.addEventListener("click", () => {
+        playTone(880, 0.12);
+        if (intro) intro.classList.remove("active");
+        setTimeout(() => {
+            if (worlds) worlds.classList.add("active");
+            document.body.classList.add("dimmed-bg");
+        }, 200);
+    });
+}
 
 // الرجوع للشاشة الرئيسية
-document.getElementById("backButton").addEventListener("click", () => {
-    playTone(440, 0.12);
-    worlds.classList.remove("active");
-    document.body.classList.remove("dimmed-bg");
-    setTimeout(() => intro.classList.add("active"), 200);
-});
+const backBtn = document.getElementById("backButton");
+if (backBtn) {
+    backBtn.addEventListener("click", () => {
+        playTone(440, 0.12);
+        if (worlds) worlds.classList.remove("active");
+        document.body.classList.remove("dimmed-bg");
+        setTimeout(() => {
+            if (intro) intro.classList.add("active");
+        }, 200);
+    });
+}
 
-// الدخول لصفحة "عالم آدم وآسر" الفضائية المتطورة
-document.getElementById("adamWorldBtn").addEventListener("click", () => {
-    playTone(1000, 0.2, 'sine');
-    worlds.classList.remove("active");
-    document.body.classList.remove("dimmed-bg");
-    document.body.classList.add("adam-world-active");
+// الدخول لصفحة "عالم آدم وآسر"
+const adamWorldBtn = document.getElementById("adamWorldBtn");
+if (adamWorldBtn) {
+    adamWorldBtn.addEventListener("click", () => {
+        playTone(1000, 0.2, 'sine');
+        if (worlds) worlds.classList.remove("active");
+        document.body.classList.remove("dimmed-bg");
+        document.body.classList.add("adam-world-active");
 
-    setTimeout(() => {
-        adamWorldPage.classList.add("active");
-    }, 200);
-});
+        setTimeout(() => {
+            if (adamWorldPage) adamWorldPage.classList.add("active");
+        }, 200);
+    });
+}
 
-// العودة من عالم آدم وآسر لصفحة الموديولات
-document.getElementById("exitAdamWorldBtn").addEventListener("click", () => {
-    playTone(500, 0.15);
-    adamWorldPage.classList.remove("active");
-    document.body.classList.remove("adam-world-active");
-    document.body.classList.add("dimmed-bg");
+// العودة من عالم آدم وآسر
+const exitAdamWorldBtn = document.getElementById("exitAdamWorldBtn");
+if (exitAdamWorldBtn) {
+    exitAdamWorldBtn.addEventListener("click", () => {
+        playTone(500, 0.15);
+        if (adamWorldPage) adamWorldPage.classList.remove("active");
+        document.body.classList.remove("adam-world-active");
+        document.body.classList.add("dimmed-bg");
 
-    setTimeout(() => {
-        worlds.classList.add("active");
-    }, 200);
-});
+        setTimeout(() => {
+            if (worlds) worlds.classList.add("active");
+        }, 200);
+    });
+}
 
 // زر الصوت الخاص
 function triggerAboAlarm() {
@@ -235,4 +262,20 @@ function openModuleSection(sectionTitle) {
     playTone(1050, 0.18, 'sine');
     setTimeout(() => playTone(1400, 0.12, 'triangle'), 100);
     alert(`🚀 جاري فتح قطاع ${sectionTitle} في عالم آدم وآسر...`);
+}
+
+// طلب الهدايا والرسائل عبر Cloudflare API
+async function fetchGiftData(accessKey) {
+    try {
+        const response = await fetch(GIFT_API_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ accessKey })
+        });
+        const result = await response.json();
+        return result;
+    } catch (err) {
+        console.error("GIFT API Error:", err);
+        return { error: "Network or Server Connection Error" };
+    }
 }
