@@ -36,9 +36,9 @@
         <button id="enterButton" class="main-start-btn">START PROTOCOL</button>
     </div>
 
-    <!-- الصفحة الثانية: صفحة الموديولات (تم تعتيم الخلفية وتعطيل اللمس الخارجي) -->
+    <!-- الصفحة الثانية: صفحة الموديولات -->
     <div id="worlds" class="container">
-        <div class="stage-title">Moudels</div>
+        <div class="stage-title">Modules</div>
         <p class="subtitle">Select action module:</p>
 
         <div class="portal-buttons">
@@ -47,7 +47,7 @@
                 👦 Adam & Aser 👶 World
             </button>
 
-            <!-- الزر الثاني المخصص -->
+            <!-- الزر المخصص -->
             <button class="portal-btn custom-abo" id="aboBtn" onclick="triggerAboAlarm()">
                 -Âbø♛Ãdam-X-
             </button>
@@ -61,7 +61,7 @@
         <div class="stage-title glow-title">🌌 ADAM & ASER WORLD 🌌</div>
         <p class="subtitle bright-sub">اختر القطاع التفاعلي للاستكشاف:</p>
 
-        <!-- الكواكب المستديرة الخمسة للخدمات والتطبيقات -->
+        <!-- الكواكب المستديرة للخدمات والتطبيقات + كوكب الهدايا -->
         <div class="planet-modules-container">
             <div class="planet-module pm-stories" onclick="openModuleSection('قصص الأنبياء التفاعلية')">
                 <div class="planet-sphere">📖</div>
@@ -78,6 +78,12 @@
                 <span class="planet-label">الرسائل</span>
             </div>
 
+            <!-- كوكب بوابة الهدايا المباشرة -->
+            <div class="planet-module pm-gifts" onclick="openGiftModal()">
+                <div class="planet-sphere">🎁</div>
+                <span class="planet-label">الهدايا</span>
+            </div>
+
             <div class="planet-module pm-education" onclick="openModuleSection('المركز التعليمي')">
                 <div class="planet-sphere">🎓</div>
                 <span class="planet-label">التعليم</span>
@@ -90,6 +96,22 @@
         </div>
 
         <button id="exitAdamWorldBtn" class="back-btn">RETURN TO MODULES</button>
+    </div>
+
+    <!-- نافذة الهدايا والرسائل السرية (Gift Portal Overlay) -->
+    <div id="giftModal" class="gift-modal-overlay">
+        <div class="gift-modal-content">
+            <button class="close-modal-btn" onclick="closeGiftModal()">✕</button>
+            <div class="gift-modal-header">
+                <h3>SECRET GIFT GATEWAY 🎁</h3>
+                <p>أدخل كود الوصول لاستلام الهدية</p>
+            </div>
+            <div class="gift-input-group">
+                <input type="password" id="giftAccessKey" placeholder="أدخل المفتاح الخاص..." />
+                <button onclick="handleGiftSubmit()" id="giftSubmitBtn">فتح الهدية</button>
+            </div>
+            <div id="giftResultDisplay" class="gift-result-area"></div>
+        </div>
     </div>
 
     <!-- زر التحكم بالصوت -->
