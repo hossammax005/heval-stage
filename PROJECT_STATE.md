@@ -6,7 +6,7 @@
 - Repository: `hossammax005/heval-stage`
 - Branch: `main`
 - Deployment target: GitHub Pages
-- Current source-of-truth commit at documentation baseline: `114babaec8fb5c9c6d7d54150042b4ad56648c4f`
+- Current application state is recorded by the latest commit on `main`.
 
 ## Current Architecture
 - Static web application: HTML + CSS + vanilla JavaScript.
@@ -14,16 +14,18 @@
 - Presentation: `style.css`.
 - Runtime/client behavior: `script.js`.
 - Placeholder pages: `adam.html`, `asr.html` (currently empty).
-- README is minimal.
-- `script.js` currently contains the animated star-field canvas, Web Audio effects, Gift Gate UI, and a POST call to the external Gift authentication backend.
-- Gift Gate backend URL is currently referenced client-side in `script.js`; no secret key is stored in the repository.
+- `script.js` contains the animated star-field canvas, Web Audio effects, World Hub navigation, Gift Gate UI, and a POST call to the external Gift authentication backend.
+- Gift Gate backend URL is referenced client-side in `script.js`; no secret key is stored in the repository.
 
 ## Current Step
-**STEP 0 — Project handoff foundation.**
+**STEP 1 — World Hub + Gift frontend hardening.**
 
-This step establishes GitHub as the project source of truth so another AI/Agent can continue from the documented state without relying on chat memory.
-
-No feature development is being performed in this step.
+Completed approved scope:
+1. `دخول العالم 🌌` now opens a real World Hub inside `index.html` without introducing a framework or separate application.
+2. World Hub exposes the current Adam and Asr placeholder sectors plus the existing Gift Gate.
+3. Gift response rendering no longer injects backend-controlled `message` or `galleryUrl` through `innerHTML`.
+4. Gallery URLs are parsed and restricted to HTTP/HTTPS before becoming links; external links use `noopener noreferrer`.
+5. Existing star field, Web Audio, Gift backend integration, visual identity, and placeholder pages were preserved.
 
 ## Decisions
 - Preserve the existing project structure unless a change is explicitly approved.
@@ -39,40 +41,51 @@ No feature development is being performed in this step.
 - Do not place secrets in client-side JavaScript for a static public site.
 - Treat external Gift authentication/backend behavior as a separate security boundary.
 - Do not weaken or bypass server-side protection in future Gift work merely to simplify the frontend.
-- Validate external data before rendering it into the DOM, especially links and messages returned by the Gift backend.
+- Treat all external backend response fields as untrusted data.
+- Use DOM APIs/textContent for backend-controlled text and validate URLs before rendering links.
 - Preserve user privacy and avoid exposing private gallery content through public/static files.
 
-## Current UI / Features Observed
+## Current UI / Features
 - Dark space-themed landing screen.
 - Brand text: `𝖍ø§§ā𝖒`.
 - `HEVAL STAGE - DIGITAL UNIVERSE` subtitle.
-- `دخول العالم 🌌` button exists but its navigation behavior is not currently implemented in `script.js`.
+- `دخول العالم 🌌` opens the World Hub in-place.
+- World Hub shows ADAM, ASR, and GIFT GATE entry points.
 - `🎁 GIFT GATE` opens a modal for a secret key.
 - Gift authentication is sent to the external `/auth` endpoint.
+- Gift success/error/loading states are rendered without HTML injection from backend data.
 - Global sound toggle and generated tones are implemented.
 - Animated star background is implemented.
 
 ## Tests / Verification
-- Repository structure and current source files were inspected directly from GitHub before this state file was created.
+- Application files were inspected directly from GitHub before editing.
+- Writes were made against the exact current blob SHAs; one stale-SHA conflict was rejected by GitHub and retried against the freshly fetched file state.
 - No automated test suite is currently present in the repository.
-- Documentation baseline does not change application behavior.
-- Existing deployed behavior should be manually checked after future application changes.
+- Manual verification is still required on the deployed GitHub Pages site for layout, navigation, and live Gift backend behavior.
 
 ## Known Risks / Gaps
 - `adam.html` and `asr.html` are placeholders.
-- The main `دخول العالم 🌌` action has no current navigation implementation.
-- Gift Gate frontend trusts response fields from the external backend and builds HTML from them; this should be reviewed before expanding the Gift module.
-- There is no automated CI/test layer yet.
+- No automated CI/test layer yet.
 - GitHub Pages deployment status should be treated as a deployment concern separate from source correctness.
+- The Gift backend itself remains outside this repository and must be reviewed separately for authorization, rate limiting, CORS, and private gallery protection.
+- World Hub is intentionally lightweight; cinematic transitions and deeper sector experiences remain future work.
 
 ## Next Step
-**Gate Review before any feature implementation.**
+**Gate Review after deployment verification.**
 
-After this documentation baseline, inspect the project against the desired HEVAL STAGE architecture and decide the next approved implementation step. Do not assume a rewrite is required.
+Verify the live GitHub Pages build, especially:
+- landing → World Hub navigation
+- back navigation
+- Adam/Asr placeholder links
+- Gift Gate open/close and authentication behavior
+- Gift success/error rendering
+- no regression in star field and sound
+
+Only after this verification should the next feature be approved.
 
 ## DO NOT CHANGE
 - Do not change the existing visual identity or brand text without explicit approval.
-- Do not remove or alter existing Gift Gate behavior as part of documentation/handoff work.
+- Do not remove or alter the existing Gift backend contract without explicit approval.
 - Do not introduce frameworks, databases, build systems, or other infrastructure solely for architectural fashion.
 - Do not start a major rewrite.
 - Do not add secrets to the repository.
@@ -80,4 +93,4 @@ After this documentation baseline, inspect the project against the desired HEVAL
 - Do not implement future ideas simply because they appear in historical conversation context; confirm them against the current project state and approved plan first.
 
 ## Handoff Rule
-An incoming AI/Agent must read this file and `ARCHITECTURE.md` before making project changes. It must inspect the current repository state before editing and must report what it changed and what it intentionally did not change.
+An incoming AI/Agent must read this file and `ARCHITECTURE.md` before making project changes. It must inspect the current repository state before editing and must report what it changed, what it intentionally did not change, and what verification remains.
