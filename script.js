@@ -124,6 +124,34 @@ if (enterButton) enterButton.addEventListener('click', showWorldHub);
 const hubBackButton = document.getElementById('hubBackButton');
 if (hubBackButton) hubBackButton.addEventListener('click', showIntro);
 
+// HOSSAM-X: fake security lock / Easter egg
+const hossamXButton = document.getElementById('giftGateBtn');
+if (hossamXButton) {
+    hossamXButton.addEventListener('click', () => {
+        hossamXButton.classList.remove('fake-lock-trigger');
+        void hossamXButton.offsetWidth;
+        hossamXButton.classList.add('fake-lock-trigger');
+
+        if (soundEnabled) {
+            initAudio();
+            try {
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(180, now);
+                osc.frequency.exponentialRampToValueAtTime(70, now + 0.18);
+                gain.gain.setValueAtTime(0.06, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + 0.22);
+            } catch (e) {}
+        }
+    });
+}
+
 // إدارة نافذة الهدايا والربط مع Cloudflare
 function openGiftModal() {
     playTone(900, 0.15);
