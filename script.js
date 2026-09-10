@@ -1,5 +1,5 @@
 // ==========================================
-// HEVAL STAGE - ADVANCED ENGINE v0.3.0
+// HEVAL STAGE - ADVANCED ENGINE v0.3.1
 // ==========================================
 
 const GIFT_API_URL = "https://heval-gift-backend.adamhossam0005.workers.dev/auth";
@@ -99,11 +99,38 @@ function animate() {
 }
 if (canvas) animate();
 
+// تنقّل العالم داخل نفس الصفحة
+function showWorldHub() {
+    const intro = document.getElementById('intro');
+    const hub = document.getElementById('worldHub');
+    if (!intro || !hub) return;
+    playTone(720, 0.18);
+    intro.classList.remove('active');
+    hub.classList.add('active');
+}
+
+function showIntro() {
+    const intro = document.getElementById('intro');
+    const hub = document.getElementById('worldHub');
+    if (!intro || !hub) return;
+    playTone(520, 0.12);
+    hub.classList.remove('active');
+    intro.classList.add('active');
+}
+
+const enterButton = document.getElementById('enterButton');
+if (enterButton) enterButton.addEventListener('click', showWorldHub);
+
+const hubBackButton = document.getElementById('hubBackButton');
+if (hubBackButton) hubBackButton.addEventListener('click', showIntro);
+
 // إدارة نافذة الهدايا والربط مع Cloudflare
 function openGiftModal() {
     playTone(900, 0.15);
     const modal = document.getElementById('giftModal');
     if (modal) modal.style.display = 'flex';
+    const keyInput = document.getElementById('giftKeyInput');
+    if (keyInput) keyInput.focus();
 }
 
 function closeGiftModal() {
@@ -112,17 +139,61 @@ function closeGiftModal() {
     if (modal) modal.style.display = 'none';
 }
 
+function setGiftResult(message, toneClass) {
+    const resultBox = document.getElementById('giftResultBox');
+    if (!resultBox) return;
+    resultBox.replaceChildren();
+    const messageEl = document.createElement('span');
+    messageEl.className = toneClass;
+    messageEl.textContent = message;
+    resultBox.appendChild(messageEl);
+}
+
+function safeGalleryUrl(value) {
+    if (typeof value !== 'string' || !value.trim()) return null;
+    try {
+        const url = new URL(value, window.location.href);
+        if (url.protocol !== 'https:' && url.protocol !== 'http:') return null;
+        return url.href;
+    } catch (e) {
+        return null;
+    }
+}
+
+function renderGiftSuccess(message, galleryUrl) {
+    const resultBox = document.getElementById('giftResultBox');
+    if (!resultBox) return;
+    resultBox.replaceChildren();
+
+    const messageEl = document.createElement('p');
+    messageEl.className = 'gift-success-message';
+    messageEl.textContent = `🎁 ${typeof message === 'string' && message ? message : 'تم فتح الهدية بنجاح!'}`;
+    resultBox.appendChild(messageEl);
+
+    const safeUrl = safeGalleryUrl(galleryUrl);
+    if (safeUrl) {
+        const breakEl = document.createElement('br');
+        const link = document.createElement('a');
+        link.href = safeUrl;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.className = 'gift-gallery-link';
+        link.textContent = 'اضغط هنا للفتح 🚀';
+        resultBox.appendChild(breakEl);
+        resultBox.appendChild(link);
+    }
+}
+
 async function submitGiftKey() {
     const keyInput = document.getElementById('giftKeyInput');
-    const resultBox = document.getElementById('giftResultBox');
     const key = keyInput ? keyInput.value.trim() : '';
 
     if (!key) {
-        if (resultBox) resultBox.innerHTML = "<span style='color: #ff4d4d;'>يرجى إدخال الكود أولاً!</span>";
+        setGiftResult('يرجى إدخال الكود أولاً!', 'gift-error');
         return;
     }
 
-    if (resultBox) resultBox.innerHTML = "<span style='color: #00f2fe;'>جاري التحقق من الخادم... ⌛</span>";
+    setGiftResult('جاري التحقق من الخادم... ⌛', 'gift-loading');
 
     try {
         const response = await fetch(GIFT_API_URL, {
@@ -131,20 +202,17 @@ async function submitGiftKey() {
             body: JSON.stringify({ key })
         });
 
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
 
-        if (data.success) {
+        if (data && data.success) {
             playTone(1200, 0.3);
-            let html = `<p style='color: #f3e5ab;'>🎁 ${data.message}</p>`;
-            if (data.galleryUrl) {
-                html += `<br><a href='${data.galleryUrl}' target='_blank' style='color: #00f2fe; text-decoration: underline;'>اضغط هنا للفتح 🚀</a>`;
-            }
-            resultBox.innerHTML = html;
+            renderGiftSuccess(data.message, data.galleryUrl);
         } else {
             playTone(250, 0.3);
-            resultBox.innerHTML = `<span style='color: #ff4d4d;'>❌ ${data.message || 'كود غير صحيح!'}</span>`;
+            setGiftResult(`❌ ${data && data.message ? String(data.message) : 'كود غير صحيح!'}`, 'gift-error');
         }
     } catch (err) {
-        resultBox.innerHTML = "<span style='color: #ff4d4d;'>حدث خطأ في الاتصال بالخادم!</span>";
+        setGiftResult('حدث خطأ في الاتصال بالخادم!', 'gift-error');
     }
 }
