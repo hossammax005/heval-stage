@@ -119,6 +119,95 @@ body {
     cursor: pointer;
 }
 
+/* World Hub */
+.world-hub-box {
+    position: relative;
+    padding-top: 38px;
+}
+
+.hub-title {
+    font-size: 30px;
+    margin-bottom: 2px;
+}
+
+.hub-back-btn {
+    position: absolute;
+    top: 14px;
+    right: 15px;
+    background: transparent;
+    border: 1px solid rgba(0, 242, 254, 0.25);
+    color: #93c5fd;
+    padding: 5px 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.world-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.world-card {
+    min-height: 112px;
+    padding: 14px 8px;
+    border-radius: 14px;
+    border: 1px solid rgba(0, 242, 254, 0.22);
+    background: rgba(0, 242, 254, 0.06);
+    color: #fff;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.world-card:hover, .world-card:focus-visible {
+    transform: translateY(-2px);
+    border-color: rgba(0, 242, 254, 0.65);
+    box-shadow: 0 0 18px rgba(0, 242, 254, 0.15);
+    outline: none;
+}
+
+.world-icon {
+    font-size: 25px;
+    color: #00f2fe;
+    text-shadow: 0 0 10px #00f2fe;
+}
+
+.world-card strong {
+    font-size: 13px;
+    letter-spacing: 1px;
+}
+
+.world-card small {
+    font-size: 9px;
+    color: #93c5fd;
+}
+
+.gift-card {
+    grid-column: 1 / -1;
+    border-color: rgba(212, 175, 55, 0.35);
+    background: rgba(212, 175, 55, 0.06);
+}
+
+.gift-card .world-icon {
+    color: #d4af37;
+    text-shadow: 0 0 10px rgba(212, 175, 55, 0.6);
+}
+
+.hub-status {
+    margin-top: 16px;
+    color: #6ee7f7;
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
 /* النافذة المنبثقة */
 .modal-overlay {
     display: none;
