@@ -22,13 +22,42 @@
         </div>
     </section>
 
+    <!-- مركز العالم -->
+    <section id="worldHub" class="page">
+        <div class="content-box world-hub-box">
+            <button id="hubBackButton" class="hub-back-btn" type="button">← العودة</button>
+            <h1 class="gothic-title hub-title">HEVAL STAGE</h1>
+            <p class="subtitle">THE WORLD OF ADAM &amp; ASR</p>
+
+            <div class="world-grid">
+                <a class="world-card" href="adam.html" aria-label="دخول عالم آدم">
+                    <span class="world-icon">♕</span>
+                    <strong>ADAM</strong>
+                    <small>SECTOR A · قيد البناء</small>
+                </a>
+                <a class="world-card" href="asr.html" aria-label="دخول عالم أسر">
+                    <span class="world-icon">✦</span>
+                    <strong>ASR</strong>
+                    <small>SECTOR B · قيد البناء</small>
+                </a>
+                <button class="world-card gift-card" type="button" onclick="openGiftModal()">
+                    <span class="world-icon">🎁</span>
+                    <strong>GIFT GATE</strong>
+                    <small>بوابة الهدايا الخاصة</small>
+                </button>
+            </div>
+
+            <p class="hub-status">◈ WORLD HUB ONLINE · EXPANSION READY ◈</p>
+        </div>
+    </section>
+
     <!-- النافذة المنبثقة للهدايا -->
     <div id="giftModal" class="modal-overlay">
         <div class="modal-card">
             <button class="close-modal-btn" onclick="closeGiftModal()">✕</button>
             <h3 class="gold-heading">◇ GATE OF SECRETS ◇</h3>
             <p class="modal-desc">أدخل كود المفتاح الخاص للوصول إلى هدية قطاعك</p>
-            <input type="password" id="giftKeyInput" class="gold-input" placeholder="أدخل الكود السرّي..." />
+            <input type="password" id="giftKeyInput" class="gold-input" placeholder="أدخل الكود السرّي..." autocomplete="off" />
             <button onclick="submitGiftKey()" class="gold-submit-btn">فتح الصندوق 🔑</button>
             <div id="giftResultBox" class="gift-result-box"></div>
         </div>
