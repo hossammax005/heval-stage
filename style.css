@@ -208,6 +208,12 @@ body {
     letter-spacing: 1px;
 }
 
+/* Gift response states */
+.gift-success-message { color: #f3e5ab; }
+.gift-gallery-link { color: #00f2fe; text-decoration: underline; }
+.gift-error { color: #ff4d4d; }
+.gift-loading { color: #00f2fe; }
+
 /* النافذة المنبثقة */
 .modal-overlay {
     display: none;
