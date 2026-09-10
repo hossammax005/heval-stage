@@ -5,9 +5,9 @@
 ```text
 HEVAL STAGE
 │
-├── index.html      → landing UI / Gift Gate markup
-├── style.css       → visual layer
-├── script.js       → client runtime
+├── index.html      → landing UI + World Hub + Gift Gate markup
+├── style.css       → visual layer + World Hub states
+├── script.js       → client runtime + navigation + Gift rendering
 ├── adam.html       → future Adam area (placeholder)
 └── asr.html        → future Asr area (placeholder)
 ```
@@ -20,11 +20,18 @@ Deployment is currently a static GitHub Pages site.
 Browser
   │
   ├── index.html
+  │     ├── Landing
+  │     ├── World Hub
+  │     │     ├── Adam placeholder → adam.html
+  │     │     ├── Asr placeholder  → asr.html
+  │     │     └── Gift Gate
+  │     └── Gift modal
+  │
   ├── style.css
   └── script.js
-       │
        ├── Canvas star field
        ├── Web Audio effects
+       ├── Landing ↔ World Hub navigation
        └── Gift Gate
               │
               └── POST secret key → external Gift auth backend
@@ -39,8 +46,10 @@ Responsible for:
 - presentation
 - interaction
 - local visual/audio behavior
+- World Hub navigation
 - collecting a Gift key and sending it to the backend
-- displaying the backend response
+- safely displaying the backend response
+- validating a returned gallery URL before making it clickable
 
 Not responsible for:
 - securely storing Gift secrets
@@ -74,16 +83,23 @@ Any AI/Agent working on the project must:
 4. Respect `DO NOT CHANGE` rules.
 5. Make only the approved scope of change.
 6. Avoid secrets and credentials in source control.
-7. Report changed files, behavior changes, tests/verification, and remaining risks.
-8. Update `PROJECT_STATE.md` when a meaningful architectural or project-state decision changes.
+7. Treat external backend data as untrusted.
+8. Report changed files, behavior changes, tests/verification, and remaining risks.
+9. Update `PROJECT_STATE.md` when a meaningful architectural or project-state decision changes.
 
-## 6. Future Direction — Not Implemented Yet
+## 6. Current Implementation Boundary
+
+The World Hub is intentionally implemented as a lightweight section in the existing `index.html` rather than a new framework, route system, or application. This keeps the single-world architecture intact while creating a real navigation center.
+
+Gift frontend rendering uses DOM APIs (`textContent`, `createElement`, and `replaceChildren`) rather than injecting backend-controlled values with `innerHTML`. Returned gallery destinations are accepted only when they resolve to HTTP/HTTPS URLs.
+
+## 7. Future Direction — Not Implemented Yet
 
 The intended evolution is an expandable digital world with private/personal areas and additional modules, while keeping the core project understandable and maintainable.
 
 Potential future architecture may introduce clearer module boundaries and reusable components, but **no framework migration or large rewrite is approved by this document**.
 
-## 7. Explicit Non-Goals
+## 8. Explicit Non-Goals
 
 This baseline does not introduce:
 - a frontend framework
@@ -92,5 +108,6 @@ This baseline does not introduce:
 - multi-tenant infrastructure
 - a build pipeline solely for convenience
 - a full rewrite
+- cinematic transition infrastructure beyond the current lightweight UI behavior
 
 Any of these require a separate architectural decision.
