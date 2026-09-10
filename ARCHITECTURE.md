@@ -6,10 +6,10 @@
 HEVAL STAGE
 │
 ├── index.html      → landing UI + World Hub + Gift Gate markup
-├── style.css       → visual layer + World Hub states
+├── style.css       → visual layer + World Hub + sector states
 ├── script.js       → client runtime + navigation + Gift rendering
-├── adam.html       → future Adam area (placeholder)
-└── asr.html        → future Asr area (placeholder)
+├── adam.html       → Adam sector foundation
+└── asr.html        → Asr sector foundation
 ```
 
 Deployment is currently a static GitHub Pages site.
@@ -21,11 +21,22 @@ Browser
   │
   ├── index.html
   │     ├── Landing
+  │     │     ├── HOSSAM-X mark button
+  │     │     └── World entry
   │     ├── World Hub
-  │     │     ├── Adam placeholder → adam.html
-  │     │     ├── Asr placeholder  → asr.html
+  │     │     ├── Adam sector → adam.html
+  │     │     ├── Asr sector  → asr.html
   │     │     └── Gift Gate
   │     └── Gift modal
+  │
+  ├── adam.html / asr.html
+  │     └── sector content foundation
+  │           ├── Stories
+  │           ├── Games
+  │           ├── Achievements
+  │           ├── Messages
+  │           ├── Memories (future)
+  │           └── World Map (future)
   │
   ├── style.css
   └── script.js
@@ -47,6 +58,7 @@ Responsible for:
 - interaction
 - local visual/audio behavior
 - World Hub navigation
+- sector-page navigation and foundation UI
 - collecting a Gift key and sending it to the backend
 - safely displaying the backend response
 - validating a returned gallery URL before making it clickable
@@ -89,17 +101,27 @@ Any AI/Agent working on the project must:
 
 ## 6. Current Implementation Boundary
 
-The World Hub is intentionally implemented as a lightweight section in the existing `index.html` rather than a new framework, route system, or application. This keeps the single-world architecture intact while creating a real navigation center.
+The World Hub remains a lightweight section in the existing `index.html`. Adam and Asr now have separate lightweight sector foundation pages, reusing the existing visual layer rather than introducing a framework, router, build system, or second application.
+
+Sector pages intentionally contain navigation/content slots only. Their Stories, Games, Achievements, Messages, Memories, and World Map experiences are future content work and are not implemented by the foundation change.
 
 Gift frontend rendering uses DOM APIs (`textContent`, `createElement`, and `replaceChildren`) rather than injecting backend-controlled values with `innerHTML`. Returned gallery destinations are accepted only when they resolve to HTTP/HTTPS URLs.
 
-## 7. Future Direction — Not Implemented Yet
+## 7. Project Core Principles
 
-The intended evolution is an expandable digital world with private/personal areas and additional modules, while keeping the core project understandable and maintainable.
+- Zero cost whenever technically practical.
+- Maximum reach and lightweight delivery.
+- Preserve the original HEVAL STAGE identity and emotional/cinematic DNA.
+- Build one expandable digital world, not unrelated pages/sites.
+- `LET IT HIT ♡` — technology serves meaning and impact.
+
+## 8. Future Direction — Not Implemented Yet
+
+The intended evolution is an expandable digital world with personal areas, content, memories, world mapping, and additional modules, while keeping the core project understandable and maintainable.
 
 Potential future architecture may introduce clearer module boundaries and reusable components, but **no framework migration or large rewrite is approved by this document**.
 
-## 8. Explicit Non-Goals
+## 9. Explicit Non-Goals
 
 This baseline does not introduce:
 - a frontend framework
@@ -108,6 +130,6 @@ This baseline does not introduce:
 - multi-tenant infrastructure
 - a build pipeline solely for convenience
 - a full rewrite
-- cinematic transition infrastructure beyond the current lightweight UI behavior
+- heavy cinematic infrastructure solely for the sector foundation
 
 Any of these require a separate architectural decision.
