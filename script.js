@@ -212,6 +212,10 @@ function renderGiftSuccess(message, galleryUrl) {
     }
 }
 
+// Security enhancement: Enforce input limits and request timeout to avoid DoS and hanging UI
+const MAX_KEY_LENGTH = 128;
+const REQUEST_TIMEOUT_MS = 10000;
+
 async function submitGiftKey() {
     const keyInput = document.getElementById('giftKeyInput');
     const key = keyInput ? keyInput.value.trim() : '';
@@ -221,13 +225,24 @@ async function submitGiftKey() {
         return;
     }
 
+    // Defensive check: prevent oversized payloads from being sent
+    if (key.length > MAX_KEY_LENGTH) {
+        setGiftResult('الكود المدخل طويل جداً!', 'gift-error');
+        return;
+    }
+
     setGiftResult('جاري التحقق من الخادم... ⌛', 'gift-loading');
+
+    // Security: AbortController prevents unbounded network requests that hang client resources
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
     try {
         const response = await fetch(GIFT_API_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ key })
+            body: JSON.stringify({ key }),
+            signal: controller.signal
         });
 
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -241,6 +256,12 @@ async function submitGiftKey() {
             setGiftResult(`❌ ${data && data.message ? String(data.message) : 'كود غير صحيح!'}`, 'gift-error');
         }
     } catch (err) {
-        setGiftResult('حدث خطأ في الاتصال بالخادم!', 'gift-error');
+        if (err && err.name === 'AbortError') {
+            setGiftResult('انتهت مهلة الاتصال بالخادم!', 'gift-error');
+        } else {
+            setGiftResult('حدث خطأ في الاتصال بالخادم!', 'gift-error');
+        }
+    } finally {
+        clearTimeout(timeoutId);
     }
 }
