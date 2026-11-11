@@ -57,8 +57,8 @@
             <button class="close-modal-btn" onclick="closeGiftModal()">✕</button>
             <h3 class="gold-heading">◇ GATE OF SECRETS ◇</h3>
             <p class="modal-desc">أدخل كود المفتاح الخاص للوصول إلى هدية قطاعك</p>
-            <input type="password" id="giftKeyInput" class="gold-input" placeholder="أدخل الكود السرّي..." autocomplete="off" />
-            <button onclick="submitGiftKey()" class="gold-submit-btn">فتح الصندوق 🔑</button>
+            <input type="password" id="giftKeyInput" class="gold-input" placeholder="أدخل الكود السرّي..." autocomplete="off" maxlength="128" />
+            <button id="giftSubmitBtn" onclick="submitGiftKey()" class="gold-submit-btn">فتح الصندوق 🔑</button>
             <div id="giftResultBox" class="gift-result-box"></div>
         </div>
     </div>
