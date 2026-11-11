@@ -212,8 +212,16 @@ function renderGiftSuccess(message, galleryUrl) {
     }
 }
 
+// Security: limit input length and request duration to protect endpoint & prevent hanging
+const MAX_KEY_LENGTH = 128;
+const API_TIMEOUT_MS = 10000;
+let isSubmittingGift = false;
+
 async function submitGiftKey() {
+    if (isSubmittingGift) return;
+
     const keyInput = document.getElementById('giftKeyInput');
+    const submitBtn = document.getElementById('giftSubmitBtn');
     const key = keyInput ? keyInput.value.trim() : '';
 
     if (!key) {
@@ -221,13 +229,24 @@ async function submitGiftKey() {
         return;
     }
 
+    if (key.length > MAX_KEY_LENGTH) {
+        setGiftResult('كود غير صالح: تجاوز الحد المسموح!', 'gift-error');
+        return;
+    }
+
+    isSubmittingGift = true;
+    if (submitBtn) submitBtn.disabled = true;
     setGiftResult('جاري التحقق من الخادم... ⌛', 'gift-loading');
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
 
     try {
         const response = await fetch(GIFT_API_URL, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ key })
+            body: JSON.stringify({ key }),
+            signal: controller.signal
         });
 
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -241,6 +260,14 @@ async function submitGiftKey() {
             setGiftResult(`❌ ${data && data.message ? String(data.message) : 'كود غير صحيح!'}`, 'gift-error');
         }
     } catch (err) {
-        setGiftResult('حدث خطأ في الاتصال بالخادم!', 'gift-error');
+        if (err.name === 'AbortError') {
+            setGiftResult('انتهت مهلة الاتصال بالخادم!', 'gift-error');
+        } else {
+            setGiftResult('حدث خطأ في الاتصال بالخادم!', 'gift-error');
+        }
+    } finally {
+        clearTimeout(timeoutId);
+        isSubmittingGift = false;
+        if (submitBtn) submitBtn.disabled = false;
     }
 }
